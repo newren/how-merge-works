@@ -178,4 +178,161 @@
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Helpful commands}
+
+  \only<1-8>{
+  Seeing which files are conflicted:\\
+    {\footnotesize\texttt{%
+    \$ git ls-files -u \\
+    100644 41e3dc22a02a972d0d42 1 \qquad pirate.java\\
+    100644 f185132ce93bf3e453b8 2 \qquad pirate.java\\
+    100644 b506e78238513afdfbb0 3 \qquad pirate.java\\[\baselineskip]
+    }}
+  }
+
+  \only<2-3>{
+    Viewing other versions:\\
+      {\footnotesize\texttt{%
+      \$ git show :stage:filename \\
+      \$ git show sha1sum \\[\baselineskip]
+      }}
+
+    \only<3>{
+    Example:\\
+      {\footnotesize\texttt{%
+      \$ git show :2:pirate.java \\
+      speak\_like\_a\_pirate(arrrgs);\\
+      explore\_sea(aye, matey);\\
+      shiver(me.timbers);\\[\baselineskip]
+      }}
+    }
+  }
+
+  \only<4-5>{
+    Diffing against other versions:\\
+      {\footnotesize\texttt{%
+      \$ git diff [-{}-base|-{}-ours|-{}-theirs] [filename] \\
+      }}
+
+    \only<5>{
+    Example:\\
+      {\footnotesize\texttt{%
+      \$ git diff -{}-base \\
+      ...\\
+      @@ -1,3 +1,7 @@\\
+       speak\_like\_a\_pirate(arrrgs);\\
+      {\color{myred}-explore\_sea(plus, plus);}\\
+      {\color{mygreen}%
+      +<{}<{}<{}<{}<{}<{}< HEAD\\
+      +explore\_sea(aye, matey);\\
+      +=======\\
+      +explore\_sea(me.love[0]);\\
+      +>{}>{}>{}>{}>{}>{}> branchB}\\
+       shiver(me.timbers);\\[\baselineskip]
+      }}
+    }
+  }
+
+  \only<6-8>{
+    Ovewriting with different versions:\\
+      {\footnotesize\texttt{%
+      \$ git checkout [-{}-ours|-{}-theirs] <filename> \\
+      \$ git checkout [-{}-merge|-m|-{}-conflict=diff3] <filename>
+          \\[0.5\baselineskip]
+      }}
+
+    \only<7>{
+    Example:\\
+      {\footnotesize\texttt{%
+      \$ git checkout -{}-ours pirate.java \\
+      \$ cat pirate.java \\
+      speak\_like\_a\_pirate(arrrgs);\\
+      explore\_sea(aye, matey);\\
+       shiver(me.timbers);\\[\baselineskip]
+      }}
+    }
+
+    \only<8>{
+    Example:\\
+      {\footnotesize\texttt{%
+      \$ git checkout -{}-conflict=diff3 pirate.java\\
+      \$ cat pirate.java \\
+      speak\_like\_a\_pirate(arrrgs);\\
+      <{}<{}<{}<{}<{}<{}< ours\\
+      explore\_sea(aye, matey);\\
+      ||||||| base\\
+      explore\_sea(plus, plus);\\
+      =======\\
+      explore\_sea(me.love[0]);\\
+      >{}>{}>{}>{}>{}>{}> theirs\\
+      shiver(me.timbers);\\[\baselineskip]
+      }}
+    }
+  }
+
+  \only<9-12>{
+    \only<9-11>{
+    Can look for commits which touched conflicted files:\\[0.5\baselineskip]
+      {\scriptsize\texttt{%
+      \$ git log HEAD...MERGE\_HEAD -{}- \textbackslash\\
+          \hspace*{10em} `git ls-files -u | awk \{print\textbackslash\$4\}`\\
+      commit 95d844d711a8ba9fae97 (HEAD, branchA)\\
+      Author: Cap'n Blackbeard <black@beard.pirate>\\
+      Date:   Tue May 22 13:53:03 2018 -0700\\[\baselineskip]
+      \qquad\!    Aye, aye\\[\baselineskip]
+      commit 34fa04c4a1962cf949b3 (branchB)\\
+      Author: Cap'n Whitebeard <white@beard.pirate>\\
+      Date:   Tue May 22 13:52:48 2018 -0700\\[\baselineskip]
+      \qquad\!    Me first love\\[\baselineskip]
+      }}
+    }
+
+    \only<10-11>{
+      But there's an equivalent simple shorthand:\\
+      {\scriptsize\texttt{%
+      \$ git log -{}-merge\\[\baselineskip]
+      }}
+    }
+
+    \only<11>{
+      Which can be handy in combination with other flags, e.g.:\\
+      {\scriptsize\texttt{%
+      \$ git log -{}-merge -{}-oneline -{}-left-right -p\\
+      }}
+    }
+
+    \only<12>{
+      Using handy -{}-merge flag to log:\\[0.25\baselineskip]
+      {\scriptsize\texttt{%
+      \$ git log -{}-merge -{}-oneline -{}-left-right -p\\[0.5\baselineskip]
+      {\color{blue}\textbf{<}} {\color{brown}95d844d (}{\color{cyan}HEAD}, {\color{cyan}branchA}{\color{brown})} Aye, aye\\
+      diff --git a/pirate.java b/pirate.java\\
+      index 41e3dc2..f185132 100644\\
+      --- a/pirate.java\\
+      +++ b/pirate.java\\
+      @@ -1,3 +1,3 @@\\
+       speak\_like\_a\_pirate(arrrgs);\\
+      {\color{myred}-explore\_sea(plus, plus);}\\
+      {\color{mygreen}+explore\_sea(aye, matey);}\\
+       shiver(me.timbers);\\[0.5\baselineskip]
+      {\color{blue}\textbf{>}} {\color{brown}34fa04c (}{\color{cyan}branchB}{\color{brown})} Me first love\\
+      diff --git a/pirate.java b/pirate.java\\
+      index 41e3dc2..b506e78 100644\\
+      --- a/pirate.java\\
+      +++ b/pirate.java\\
+      @@ -1,3 +1,3 @@\\
+       speak\_like\_a\_pirate(arrrgs);\\
+      {\color{myred}-explore\_sea(plus, plus);}\\
+      {\color{mygreen}+explore\_sea(me.love[0]);}\\
+       shiver(me.timbers);\\
+      }}
+    }
+
+  }
+
+\end{frame}
+
 \end{document}
