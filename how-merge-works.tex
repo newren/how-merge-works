@@ -142,6 +142,22 @@
 \begin{frame}
   \frametitle{Three-way content merge, cont.}
 
+  Pro-tip: You can ask git to check if there are conflict markers or
+  whitespace errors:\\[0.25\baselineskip]
+    {\scriptsize\texttt{%
+    \$ git diff -{}-check\\
+    pirate.java:2: leftover conflict marker\\
+    pirate.java:4: leftover conflict marker\\
+    pirate.java:6: leftover conflict marker\\
+    }}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Three-way content merge, cont.}
+
   git's sha1sum of individual files can be used for a shorthand:\\
     {\footnotesize\texttt{%
     \hspace*{0.6em} path\\
