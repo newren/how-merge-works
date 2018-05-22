@@ -335,4 +335,43 @@
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Helpful commands, summarized}
+
+  Checking for remaining conflict markers:\\
+    {\scriptsize\texttt{%
+    \$ git diff -{}-check\\[\baselineskip]
+    }}
+
+  Seeing which files are conflicted:\\
+    {\footnotesize\texttt{%
+    \$ git ls-files -u \\[\baselineskip]
+    }}
+
+  Viewing other versions:\\
+    {\footnotesize\texttt{%
+    \$ git show :stage:filename \\[\baselineskip]
+    }}
+
+  Diffing against other versions:\\
+    {\footnotesize\texttt{%
+    \$ git diff [-{}-base|-{}-ours|-{}-theirs] [filename(s)] \\[\baselineskip]
+    }}
+
+  Ovewriting with different versions:\\
+    {\footnotesize\texttt{%
+    \$ git checkout [-{}-ours|-{}-theirs] <filename> \\
+    \$ git checkout [-{}-merge|-m|-{}-conflict=diff3] <filename>
+          \\[\baselineskip]
+    }}
+
+  Seeing which commits touched conflicted files:\\
+    {\scriptsize\texttt{%
+    \$ git log -{}-merge -{}-oneline -{}-left-right -p\\[\baselineskip]
+    }}
+
+\end{frame}
+
 \end{document}
