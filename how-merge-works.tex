@@ -316,14 +316,14 @@
     \only<11>{
       Which can be handy in combination with other flags, e.g.:\\
       {\scriptsize\texttt{%
-      \$ git log -{}-merge -{}-oneline -{}-left-right -p\\
+      \$ git log -{}-merge -p -{}-oneline -{}-left-right\\
       }}
     }
 
     \only<12>{
       Using handy -{}-merge flag to log:\\[0.25\baselineskip]
       {\scriptsize\texttt{%
-      \$ git log -{}-merge -{}-oneline -{}-left-right -p\\[0.5\baselineskip]
+      \$ git log -{}-merge -p -{}-oneline -{}-left-right\\[0.5\baselineskip]
       {\color{blue}\textbf{<}} {\color{brown}95d844d (}{\color{cyan}HEAD}, {\color{cyan}branchA}{\color{brown})} Aye, aye\\
       diff --git a/pirate.java b/pirate.java\\
       index 41e3dc2..f185132 100644\\
@@ -385,7 +385,7 @@
 
   Seeing which commits touched conflicted files:\\
     {\scriptsize\texttt{%
-    \$ git log -{}-merge -{}-oneline -{}-left-right -p\\[\baselineskip]
+    \$ git log -{}-merge -p -{}-oneline -{}-left-right\\[\baselineskip]
     }}
 
 \end{frame}
