@@ -137,4 +137,45 @@
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Three-way content merge, cont.}
+
+  git's sha1sum of individual files can be used for a shorthand:\\
+    {\footnotesize\texttt{%
+    \hspace*{0.6em} path\\
+    1:\ sha1sum(orig:path)\\
+    2:\ sha1sum(A:path)\\
+    3:\ sha1sum(B:path)\\[\baselineskip]
+    }}
+
+  \pause
+
+  For example (using shortened shas here):\\
+    {\footnotesize\texttt{%
+    \hspace*{0.6em} pirate.java\\
+    1:\ 5ca1ab1e\\
+    2:\ f005ba11\\
+    3:\ b0a710ad\\[\baselineskip]
+    }}
+
+  \pause
+
+  Where the ordering is as follows:
+  {\footnotesize
+  \begin{enumerate}
+    \item merge base
+    \item HEAD (branch checked out before running merge)
+    \item other branch (the argument you passed to merge)
+  \end{enumerate}
+  }
+
+  \pause
+
+  \vspace*{0.5\baselineskip}
+  git makes these accessible...
+
+\end{frame}
+
 \end{document}
