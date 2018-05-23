@@ -38,6 +38,15 @@
  \colorlet{mygreen}{green!70!black} % slightly darker than normal green
  %\newcommand{\nonliteral}{\color{MyGreen}}
 
+ \newenvironment{myitemize}
+                {
+                  \begin{itemize}
+                    \setlength{\itemsep}{0pt}
+                    \setlength{\parskip}{-0.125\baselineskip}
+                    \setlength{\parsep} {0pt}
+                }%
+                {\end{itemize}}
+
 \title{Merging in Git}
 
 \author{Elijah Newren}
@@ -387,6 +396,104 @@
     {\scriptsize\texttt{%
     \$ git log -{}-merge -p -{}-oneline -{}-left-right\\[\baselineskip]
     }}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Caveats}
+
+  {\scriptsize
+
+  Critiques/Limitations of three-way merge idea\\[-0.5\baselineskip]
+  \begin{myitemize}
+    \item Context region size tradeoffs%; issues:
+      %* what's the correct size for the context region?  too small?  too big?
+      %* example: import/include statements -- context lines irrelevant
+    \item File Content
+      \begin{myitemize}\scriptsize
+        \item Files must be ``normal'' (text)%; counter-examples:
+          %* binary
+          %* symlinks
+          %* submodules
+        \item Assumes line-based diffing%; issues:
+          %* journal, documentation, word-based articles
+        \item Text-based diff ignores semantic content%; issues:
+          %* one branch adds call to a function, another adds an argument to it
+        \item Needs file ``encoding'' to be the same% (merge.renormalize); issues:
+          %* ASCII vs. EBCDIC (yeah, sure)
+          %* CR vs. CRLF (happens...)
+          %* whitespace normalization?
+          %* unicode normalization?
+          %* other programmatic modifications -- indentation, etc.?
+      \end{myitemize}\vspace*{-0.3\baselineskip}
+    \item Ignores intermediate history%; issues:
+      %* "fix" applied on both sides, then reverted on one side because it's
+      %  harmful...
+      %* same fix on both sides, extra fixes on other side in same region =>
+      %  conflicts
+      %* however, three-way merge is hard enough for people to understand.
+      %  Explaining a conflict that arises from intermediate history might
+      %  become truly baffling
+  \end{myitemize}\vspace*{-0.3\baselineskip}
+
+  Applicability of three-way merge idea:\\[-0.7\baselineskip]
+  \begin{myitemize}
+    \item Merge-base
+      \begin{myitemize}\scriptsize
+      \item exists%; counter-examples:
+        %* merging independent repositories -- do two-way merge
+      \item unique%; counter-examples:
+        %* lots; see git.git and linux.git.  unlikely with central server and
+        %  merge-to-mainline workflow
+        %* follow-on assumption: merge-base can be constructed by just merging
+        %  the others together (counter-examples: conflicts, including crazy types)
+        %* follow-on assumption: we can find something meaningful to use as a
+        %  merge-base and construct it as a tree (maybe...)
+      \end{myitemize}\vspace*{-0.3\baselineskip}
+    \item File versions
+      \begin{myitemize}\scriptsize
+        \item Three versions of each file exist%; counter-examples:
+          %* one version
+          % * existed in base \& deleted on both sides
+          % * new file unique to one side (possible D/F conflict...)
+          %* two versions
+          %  * didn't exist in base; add/add conflict unless identical
+          %  * did exist in base: modify/delete unless unmodified
+          %* more than three versions: (see combination effects)
+        \item The three versions of the file have same pathname
+          %* whoo, boy, this is a big can of worms
+        \item If there are three versions of pathname, they're related%; counter-examples:
+          %* simple rename/modify (use O,A,B notation to show modify/delete+add)
+          %* one renamed away, with new file in place
+          %* one file deleted, new file now in its place
+          %* swap rename (a->b, b->a)
+          %* (This could get really complicated, but git doesn't do break detection
+          %   for merges, so not relevant right now)
+          \end{myitemize}\vspace*{-0.3\baselineskip}
+    \item Chunks of lines (e.g. functions) do not move between files
+      %* git handles this in blame, but not for merges.  At least not yet.
+  \end{myitemize}\vspace*{-0.3\baselineskip}
+
+  Subtle assumptions:\\[-0.5\baselineskip]
+  \begin{myitemize}
+    \item Path for a file is writable %(whoops)
+    \item No nesting of conflict markers %(ha!)
+    \item Conflicts representable on disk
+      %(oops: modify/delete, D/F, submodule/file,
+      %submodule/directory, submodule/submodule, rename/rename(1to2), directory
+      %rename detection issues)
+  \end{myitemize}\vspace*{-0.3\baselineskip}
+
+  Implementation limits:\\[-0.5\baselineskip]
+  \begin{myitemize}
+    \item Dirty changes
+    \item Rename heuristics
+    \item Writing intermediate file-merges to object store immediately
+  \end{myitemize}
+
+  }
 
 \end{frame}
 
