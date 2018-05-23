@@ -152,23 +152,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Helpful git commands}
-\begin{frame}
-  \frametitle{Three-way content merge, cont.}
-
-  Pro-tip: You can ask git to check if there are conflict markers or
-  whitespace errors:\\[0.25\baselineskip]
-    {\scriptsize\texttt{%
-    \$ git diff -{}-check\\
-    pirate.java:2: leftover conflict marker\\
-    pirate.java:4: leftover conflict marker\\
-    pirate.java:6: leftover conflict marker\\
-    }}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}
   \frametitle{Three-way content merge, cont.}
 
@@ -210,11 +193,28 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Helpful git commands}
+\begin{frame}
+  \frametitle{Helpful commands}
+
+  Pro-tip: You can ask git to check if there are conflict markers or
+  whitespace errors:\\[0.25\baselineskip]
+    {\scriptsize\texttt{%
+    \$ git diff -{}-check\\
+    pirate.java:2: leftover conflict marker\\
+    pirate.java:4: leftover conflict marker\\
+    pirate.java:6: leftover conflict marker\\
+    }}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame}
   \frametitle{Helpful commands}
 
   \only<1-8>{
-  Seeing which files are conflicted:\\
+  Getting details about which files are conflicted:\\
     {\footnotesize\texttt{%
     \$ git ls-files -u \\
     100644 41e3dc22a02a972d0d42 1 \qquad pirate.java\\
@@ -375,7 +375,7 @@
     \$ git diff -{}-check\\[\baselineskip]
     }}
 
-  Seeing which files are conflicted:\\
+  Getting details about which files are conflicted:\\
     {\footnotesize\texttt{%
     \$ git ls-files -u \\[\baselineskip]
     }}
