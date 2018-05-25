@@ -167,7 +167,7 @@
 
   For example (using shortened shas here):\\
     {\footnotesize\texttt{%
-    \hspace*{0.6em} pirate.java\\
+    \hspace*{0.6em} angryp.swine-latin\\
     1:\ 5ca1ab1e\\
     2:\ f005ba11\\
     3:\ b0a710ad\\[\baselineskip]
@@ -201,9 +201,9 @@
   whitespace errors:\\[0.25\baselineskip]
     {\scriptsize\texttt{%
     \$ git diff -{}-check\\
-    pirate.java:2: leftover conflict marker\\
-    pirate.java:4: leftover conflict marker\\
-    pirate.java:6: leftover conflict marker\\
+    angryp.swine-latin:2: leftover conflict marker\\
+    angryp.swine-latin:4: leftover conflict marker\\
+    angryp.swine-latin:6: leftover conflict marker\\
     }}
 
 \end{frame}
@@ -217,9 +217,9 @@
   Getting details about which files are conflicted:\\
     {\footnotesize\texttt{%
     \$ git ls-files -u \\
-    100644 41e3dc22a02a972d0d42 1 \qquad pirate.java\\
-    100644 f185132ce93bf3e453b8 2 \qquad pirate.java\\
-    100644 b506e78238513afdfbb0 3 \qquad pirate.java\\[\baselineskip]
+    100644 41e3dc22a02a972d0d42 1 \qquad angryp.swine-latin\\
+    100644 f185132ce93bf3e453b8 2 \qquad angryp.swine-latin\\
+    100644 b506e78238513afdfbb0 3 \qquad angryp.swine-latin\\[\baselineskip]
     }}
   }
 
@@ -233,7 +233,7 @@
     \only<3>{
     Example:\\
       {\footnotesize\texttt{%
-      \$ git show :2:pirate.java \\
+      \$ git show :2:angryp.swine-latin \\
       speak\_like\_a\_pirate(arrrgs);\\
       explore\_sea(aye, matey);\\
       shiver(me.timbers);\\[\baselineskip]
@@ -277,8 +277,8 @@
     \only<7>{
     Example:\\
       {\footnotesize\texttt{%
-      \$ git checkout -{}-ours pirate.java \\
-      \$ cat pirate.java \\
+      \$ git checkout -{}-ours angryp.swine-latin \\
+      \$ cat angryp.swine-latin \\
       speak\_like\_a\_pirate(arrrgs);\\
       explore\_sea(aye, matey);\\
        shiver(me.timbers);\\[\baselineskip]
@@ -288,8 +288,8 @@
     \only<8>{
     Example:\\
       {\footnotesize\texttt{%
-      \$ git checkout -{}-conflict=diff3 pirate.java\\
-      \$ cat pirate.java \\
+      \$ git checkout -{}-conflict=diff3 angryp.swine-latin\\
+      \$ cat angryp.swine-latin \\
       speak\_like\_a\_pirate(arrrgs);\\
       <{}<{}<{}<{}<{}<{}< ours\\
       explore\_sea(aye, matey);\\
@@ -339,20 +339,20 @@
       {\scriptsize\texttt{%
       \$ git log -{}-merge -p -{}-oneline -{}-left-right\\[0.5\baselineskip]
       {\color{blue}\textbf{<}} {\color{brown}95d844d (}{\color{cyan}HEAD}, {\color{cyan}branchA}{\color{brown})} Aye, aye\\
-      diff --git a/pirate.java b/pirate.java\\
+      diff --git a/angryp.swine-latin b/angryp.swine-latin\\
       index 41e3dc2..f185132 100644\\
-      --- a/pirate.java\\
-      +++ b/pirate.java\\
+      --- a/angryp.swine-latin\\
+      +++ b/angryp.swine-latin\\
       @@ -1,3 +1,3 @@\\
       \ speak\_like\_a\_pirate(arrrgs);\\
       {\color{myred}-explore\_sea(plus, plus);}\\
       {\color{mygreen}+explore\_sea(aye, matey);}\\
       \ shiver(me.timbers);\\[0.5\baselineskip]
       {\color{blue}\textbf{>}} {\color{brown}34fa04c (}{\color{cyan}branchB}{\color{brown})} Me first love\\
-      diff --git a/pirate.java b/pirate.java\\
+      diff --git a/angryp.swine-latin b/angryp.swine-latin\\
       index 41e3dc2..b506e78 100644\\
-      --- a/pirate.java\\
-      +++ b/pirate.java\\
+      --- a/angryp.swine-latin\\
+      +++ b/angryp.swine-latin\\
       @@ -1,3 +1,3 @@\\
       \ speak\_like\_a\_pirate(arrrgs);\\
       {\color{myred}-explore\_sea(plus, plus);}\\
