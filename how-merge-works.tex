@@ -553,6 +553,46 @@
 
 \section{Caveats}
 \begin{frame}
+  \frametitle{When does this fall down?}
+
+  Under what circumstances is using this algorithm the wrong way to merge
+  three versions of the file?
+
+  \only<2->{
+  \begin{itemize}
+    \item Ignores intermediate history
+    \only<3->{
+    \begin{itemize}
+      \item Same fix applied on both branches.  Later, additional fixes were
+            made to the same lines on one branch.
+
+      \only<4->{
+      \item A ``fix'' was applied on both branches (cherry-picked or
+            manually committed in both places), but then reverted on one
+            side because it's harmful.
+      }
+
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+
+  \only<5>{
+
+    Managing: For some cases, extra manual conflict resolution.  For
+    other cases, make sure to build and test the merged result, not
+    just the proposed change.
+
+    \vspace*{\baselineskip}
+    (If these two cases bother you enough, consider darcs or
+    \href{https://jneem.github.io/merging/}{\color{myblue}pijul}.)  }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
   \frametitle{Caveats}
 
   {\scriptsize
