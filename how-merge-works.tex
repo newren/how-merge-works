@@ -799,8 +799,14 @@
     \end{itemize}
     \item Nested conflict markers
     \item Avoiding unnecessary updates
-    \item Dirty changes and untracked have many ways of getting in the way,
-          especially with current design
+    \item Dirty changes and untracked files have many ways of getting
+          in the way, especially with current design
+    \item Implementation issues that bubble up to the user
+    \begin{itemize}
+      \item rename detection heuristics
+      \item diff algorithm (see -Xdiff-algorithm)
+      \item writing intermediate file-merges to object store immediately
+    \end{itemize}
   \end{itemize}
 
 \end{frame}
