@@ -197,22 +197,6 @@
 \begin{frame}
   \frametitle{Helpful commands}
 
-  Pro-tip: You can ask git to check if there are conflict markers or
-  whitespace errors:\\[0.25\baselineskip]
-    {\scriptsize\texttt{%
-    \$ git diff -{}-check\\
-    angryp.swine-latin:2: leftover conflict marker\\
-    angryp.swine-latin:4: leftover conflict marker\\
-    angryp.swine-latin:6: leftover conflict marker\\
-    }}
-
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{frame}
-  \frametitle{Helpful commands}
-
   \only<1-8>{
   Getting details about which files are conflicted:\\
     {\footnotesize\texttt{%
@@ -368,12 +352,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
-  \frametitle{Helpful commands, summarized}
+  \frametitle{Helpful commands}
 
-  Checking for remaining conflict markers:\\
+  Pro-tip: You can ask git to check if there are conflict markers or
+  whitespace errors:\\[0.25\baselineskip]
     {\scriptsize\texttt{%
-    \$ git diff -{}-check\\[\baselineskip]
+    \$ git diff -{}-check\\
+    angryp.swine-latin:2: leftover conflict marker\\
+    angryp.swine-latin:4: leftover conflict marker\\
+    angryp.swine-latin:6: leftover conflict marker\\
     }}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{Helpful commands, summarized}
 
   Getting details about which files are conflicted:\\
     {\footnotesize\texttt{%
@@ -400,6 +395,11 @@
   Seeing which commits touched conflicted files:\\
     {\scriptsize\texttt{%
     \$ git log -{}-merge -p -{}-left-right\\[\baselineskip]
+    }}
+
+  Checking for remaining conflict markers:\\
+    {\scriptsize\texttt{%
+    \$ git diff -{}-check\\[\baselineskip]
     }}
 
 \end{frame}
