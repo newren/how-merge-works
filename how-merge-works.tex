@@ -615,7 +615,7 @@
   }
 
   \only<7->{
-  Currently:
+  Let's dig in, except:
   \begin{itemize}
     \item Git does not (yet?) do break detection (determining whether
           same-named files are no longer related) for merges.
@@ -628,6 +628,180 @@
     }
   \end{itemize}
   }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Assuming previous page problems aren't an issue {\scriptsize (i.e.\
+  \begin{itemize}
+    \item Normal files
+    \item Same ``encoding''
+    \item No conflict markers already present
+    \item Line-based is okay
+    \item Files with same name are related
+    \item Content doesn't move between filenames
+    \item We have three versions of every file in each revsion
+  \end{itemize}
+  } what kinds of errors might Git report as preventing a
+  successful merge?
+
+  \only<2->{
+  \begin{itemize}
+    \item Content conflicts
+    \only<3->{
+    \item User has changes staged but not yet committed
+    \only<4->{
+    \item User has unstaged changes that would be overwritten
+      \only<5->{
+        \begin{itemize}
+        \item Unstaged delete could come with untracked directory in the way
+          \end{itemize}
+    }}}
+  \end{itemize}
+  }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Assuming we can delete files, what additional kinds of conflicts can we get?
+  \pause
+  \begin{itemize}
+    \item modify/delete
+    \pause
+    \item untracked file in the way of content
+    \pause
+    \item untracked directory in the way
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Assuming we can also add files, what additional kinds of conflicts can we get?
+  \pause
+  \begin{itemize}
+    \item add/add
+    \pause
+    \item directory/file
+    \pause
+    \item submodule/file
+    \pause
+    \item submodule/directory
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Assuming we can also rename files, what additional kinds of
+  conflicts can we get?
+  \pause
+  \begin{itemize}
+    \item rename/delete (no modification of contents necessary)
+    \pause
+    \item rename/add
+    \pause
+    \item rename/add/delete
+    \pause
+    \item rename/rename(1to2)
+    \pause
+    \item rename/rename(1to2)/add/add
+    \pause
+    \item rename/rename(2to1)
+    \pause
+    \item rename/rename(2to1)/delete/delete
+    \pause
+    \item chains of rename/rename(1to2) and rename/rename(2to1)
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  What if there is no merge base?
+  \pause
+  \\[\baselineskip]
+  Turns any pair of non-identical files into add/add conflicts.
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  What if there are multiple merges bases?
+  \pause
+  \\[\baselineskip]
+  Merge the merge bases!
+  \pause
+  \\[\baselineskip]
+  ...but do NOT error out with conflicts.  Instead, forcibly resolve:
+  \pause
+  \begin{itemize}[<+->]
+    \item content conflicts
+    \item modify/delete
+    \item special files: binary, symlink, submodule
+    \item directory/file, directory/submodule, submodule/file
+    \item rename/delete
+    \item rename/add
+    \item rename/add/delete
+    \item rename/rename(1to2)
+    \item rename/rename(1to2)/add/add
+    \item rename/rename(2to1)
+    \item rename/rename(2to1)/delete/delete
+    \item chains of rename/rename(1to2) and rename/rename(2to1)
+    \item mode conflict (file/symlink, submodule/file, exec./plain, etc.)
+  \end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Some things you may have not noticed:
+  \begin{itemize}[<+->]
+    \item May not readily be able to represent conflicts by adding content
+          to a file at the specified path(s).
+    \item Desired content may not be writable at specified file location
+    \item More than three versions of a file possible (4 or 6)
+    \item Each conflict type has three different resolutions
+    \begin{itemize}
+      \item working tree
+      \item index
+      \item recursive-merge-base
+    \end{itemize}
+    \item Nested conflict markers
+    \item Avoiding unnecessary updates
+    \item Dirty changes and untracked have many ways of getting in the way,
+          especially with current design
+  \end{itemize}
 
 \end{frame}
 
