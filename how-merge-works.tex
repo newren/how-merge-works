@@ -909,4 +909,35 @@
 
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
+  \frametitle{Directory rename detection}
+
+  More fun:
+  \begin{itemize}[<+->]
+    \item Splitting a directory into two (or more)
+    \item ``Partial'' directory rename
+
+    \item Transitive renaming
+    \item rename/rename(2to1), but only due to transitive rename
+    \item Multiply transitive renames
+
+    \item Don't apply other side's rename if we did the same rename
+
+    \item Files/directories in the way of subset of to-be-renamed paths
+
+    \item Instead of rename, merge a directory with another
+    \item N-to-1 directory merge
+
+    \item Nested directory also renamed (and outside of parent)
+    \item Dual directory rename, one into the other's way
+    \item Renaming directory and basenames of each file within it
+    \item Renamed directory contained subdirs (possibly also renamed), not files
+
+  \end{itemize}
+
+\end{frame}
+
 \end{document}
