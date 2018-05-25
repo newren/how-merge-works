@@ -710,21 +710,33 @@
   conflicts can we get?
   \pause
   \begin{itemize}
-    \item rename/delete (no modification of contents necessary)
+    \item rename/del
+          {\scriptsize (A $\Rightarrow$ B vs. delete A)}
     \pause
     \item rename/add
+          {\scriptsize (A $\Rightarrow$ B vs. add B)}
     \pause
-    \item rename/add/delete
+    \item rename/add/del
+          {\scriptsize (A $\Rightarrow$ B vs. delete A \& add different B)}
     \pause
     \item rename/rename(1to2)
+          {\scriptsize (A $\Rightarrow$ B vs. A $\Rightarrow$ C)}
     \pause
     \item rename/rename(1to2)/add/add
+          {\scriptsize (A $\Rightarrow$ B, add C vs. A $\Rightarrow$ C, add B)}
     \pause
     \item rename/rename(2to1)
+          {\scriptsize (B $\Rightarrow$ A vs. C $\Rightarrow$ A)}
     \pause
-    \item rename/rename(2to1)/delete/delete
+    \item rename/rename(2to1)/del/del
+          {\scriptsize (B $\Rightarrow$ A, delete C vs.
+                        C $\Rightarrow$ A, delete B)}
     \pause
     \item chains of rename/rename(1to2) and rename/rename(2to1)
+          {\scriptsize (A $\Rightarrow$ B, C $\Rightarrow$ D, E $\Rightarrow$ F
+                        vs.
+                        A $\Rightarrow$ F, C $\Rightarrow$ B, E $\Rightarrow$ D)}
+
   \end{itemize}
 
 \end{frame}
