@@ -408,25 +408,163 @@
 
 \section{Caveats}
 \begin{frame}
+  \frametitle{When does this fall down?}
+
+  \only<1-17>{
+  Under what circumstances is using this algorithm the wrong way to merge
+  three versions of the file?
+  }
+
+  \only<2-4>{
+  \begin{itemize}
+    \item Files must be ``normal'' (text)
+    \only<3->{
+    \begin{itemize}
+      \item binaries
+      \item symlinks
+      \item submodules
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+  \only<4>{
+    Managing: git has some smarts (and some dumbs) for merging these
+    file types; look for ``binary'' in gitattributes(5).
+  }
+
+  \only<5-7>{
+  \begin{itemize}
+    \item Needs file ``encoding'' to be the same
+    \only<6>{
+    \begin{itemize}
+      \item ASCII vs. EBCDIC
+      \item CR vs. CRLF
+      \item whitespace normalization
+      \item unicode normalization
+      \item other programmatic modifications -- indentation, etc.
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+  \only<7>{
+  Managing:
+  \begin{itemize}
+    \item Strategy options:
+    \begin{itemize}
+      \item -Xrenormalize
+      \item -Xignore-space-change
+      \item -Xignore-all-space
+      \item -Xignore-space-at-eol
+      \item -Xignore-cr-at-eol
+      \item -Xdiff-algorithm=[patience|minimal|histogram|myers]
+    \end{itemize}
+    \item Config options:
+    \begin{itemize}
+      \item merge.renormalize
+    \end{itemize}
+    \item Important manpages:
+    \begin{itemize}
+      \item git-merge(1) ({\tiny ``MERGE STRATEGIES'' (recursive),
+                          ``CONFIGURATION''})
+      \item gitattributes(5)
+    \end{itemize}
+  \end{itemize}
+  }
+
+  \only<8-10>{
+  \begin{itemize}
+    \item Assumes conflict markers are distinguishable from other text
+    \only<9->{
+    \begin{itemize}
+      \item What if you're writing documentation about how conflicts work?
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+  \only<10>{
+  Managing: See ``conflict-marker-size'' in gitattributes(5)
+  }
+
+  \only<11-13>{
+  \begin{itemize}
+    \item Assumes line-based (vs. word-based) diffing
+    \only<12->{
+    \begin{itemize}
+      \item books
+      \item documentation
+      \item articles
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+  \only<13>{
+    Managing: Um...don't re-wrap or just suck up extra conflicts?
+  }
+
+  \only<14-17>{
+  \begin{itemize}
+    \item Text-based diff ignores (most) semantic content
+    \only<15->{
+    \begin{itemize}
+      \item both branches add a new import on the same line
+      \item one branch adds call to a function, another adds an argument to it
+    \end{itemize}
+    }
+  \end{itemize}
+  }
+  \only<16-17>{
+  \begin{multicols}{2}
+    File from branch A:\\
+    {\footnotesize\texttt{%
+    ...                             \\
+    {\color{myred}-def inspect\_ship(cannons, mast)} \\
+    {\color{mygreen}+def inspect\_ship(cannons, mast, plank)} \\
+    ...                             \\
+    }}
+    \columnbreak
+    \pause
+    Different file from branch B:\\
+    {\footnotesize\texttt{%
+    ...                             \\
+    {\color{mygreen}+inspect\_ship(MHWCK\_045026, big\_pole)} \\
+    ...
+    }}
+  \end{multicols}%
+  }
+  \only<17>{
+    Managing: For some cases, extra manual conflict resolution.  For
+    other cases, make sure to build and test the merged result, not
+    just the proposed change.
+  }
+
+  \only<18-19>{
+    Big hammer: See ``custom merge driver'' in gitattributes(5)
+    \only<19>{
+    \begin{itemize}
+      \item Can define \texttt{merge.<driver>.\{name,driver\}}
+      \item Local-only, though
+    \end{itemize}
+    }
+  }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
   \frametitle{Caveats}
 
   {\scriptsize
 
   Critiques/Limitations of three-way merge idea\\[-0.5\baselineskip]
   \begin{myitemize}
-    \item Context region size tradeoffs%; issues:
-      %* what's the correct size for the context region?  too small?  too big?
-      %* example: import/include statements -- context lines irrelevant
     \item File Content
       \begin{myitemize}\scriptsize
         \item Files must be ``normal'' (text)%; counter-examples:
           %* binary
           %* symlinks
           %* submodules
-        \item Assumes line-based diffing%; issues:
-          %* journal, documentation, word-based articles
-        \item Text-based diff ignores semantic content%; issues:
-          %* one branch adds call to a function, another adds an argument to it
         \item Needs file ``encoding'' to be the same% (merge.renormalize); issues:
           %* ASCII vs. EBCDIC (yeah, sure)
           %* CR vs. CRLF (happens...)
@@ -435,6 +573,10 @@
           %* other programmatic modifications -- indentation, etc.?
         \item Assumes conflict markers are distinguishable from other text
           % What if you're writing documenting, about how git-merge works?
+        \item Assumes line-based diffing%; issues:
+          %* journal, documentation, word-based articles
+        \item Text-based diff ignores semantic content%; issues:
+          %* one branch adds call to a function, another adds an argument to it
       \end{myitemize}\vspace*{-0.3\baselineskip}
     \item Ignores intermediate history%; issues:
       %* "fix" applied on both sides, then reverted on one side because it's
