@@ -593,6 +593,48 @@
 
 \section{Caveats}
 \begin{frame}
+  \frametitle{Applicability of three-way content merges}
+
+  Under what circumstances is using this algorithm the wrong way to
+  merge \only<1>{three versions}\only<2->{\textbf{\textit{three
+  versions}}} of \only<1-2>{the}\only<3->{\textbf{\textit{the}}}
+  file?
+
+  \only<4->{
+  \begin{itemize}
+    \item Can we assume that the same pathname at different points of history
+      implies the content is related?  (e.g. could delete a file and add an
+      unrelated one back.)
+    \only<5->{
+    \item Can we assume that the only related content for a file will be
+      found at the same pathname?
+    \only<6->{
+    \item Can we assume there are three versions of each ``file''?
+    }}
+  \end{itemize}
+  }
+
+  \only<7->{
+  Currently:
+  \begin{itemize}
+    \item Git does not (yet?) do break detection (determining whether
+          same-named files are no longer related) for merges.
+    \only<8->{
+    \item Git does not (yet?) check for movement of blocks of code between
+          files (e.g. a function moved to a different file in one branch,
+          and that function was modified on other branch) for merges.  It does
+          detect code movement as part of git blame, assuming appropriate flags
+          are passed.
+    }
+  \end{itemize}
+  }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Caveats}
+\begin{frame}
   \frametitle{Caveats}
 
   {\scriptsize
@@ -628,7 +670,7 @@
       %  become truly baffling
   \end{myitemize}\vspace*{-0.3\baselineskip}
 
-  Applicability of three-way merge idea:\\[-0.7\baselineskip]
+  Applicability of three-way content merges:\\[-0.7\baselineskip]
   \begin{myitemize}
     \item Merge-base
       \begin{myitemize}\scriptsize
